@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 2.8.11)
 project (emp-m2pc)
+set(NAME "emp-m2pc")
 
 include_directories(${CMAKE_SOURCE_DIR})
 
@@ -8,7 +9,9 @@ set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin )
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} cmake/)
 
 FIND_PACKAGE(emp-ot)
+FIND_PACKAGE(emp-tool)
 INCLUDE_DIRECTORIES(${EMP-OT_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${EMP-TOOL_INCLUDE_DIRS})
 
 set (CMAKE_C_FLAGS "-pthread -Wall -march=native -O3 -maes")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pg -ggdb")
@@ -37,3 +40,8 @@ add_bench (mal_decompose)
 add_bench (mal2pc-comb)
 add_bench (xor-tree)
 add_bench (ot_xor_tree)
+
+file(GLOB  headers 
+	"malicious/*.h"
+	)
+install(FILES ${headers}  DESTINATION include/${NAME})
